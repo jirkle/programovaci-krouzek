@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+
 # VAROVÁNÍ: Jestliže rádi kopírujete a špagetový kód vám nevadí, rozhodně následující řádky nečtěte!
 
 # Následující řádky obsahují cykly. Často potřebujeme nějaký příkaz/y vykonat několikrát za sebou pouze s nějakým měnícím se parametrem.
-# K tomu nám slouží cykly. První cyklus postupně ukládá do proměnné x čísla od 1 do 3 a spouští odsazené příkazy, v tomto případě pouze vypíše obsah proměnné x.
+# K tomu nám slouží cykly. První cyklus postupně ukládá do proměnné x čísla od 1 do 3 a spouští odsazené příkazy. 
+# V tomto případě vypíše obsah proměnné x.
 
 print("Umím počítat do tří! Podívej!")
 for x in range(1, 4):
     print("%d" % x)
 
+# ----------------------------------------------------------------------------------------
 
 # K druhému cyklu si nejdříve vytvoříme seznam se čtyřmi položkami. Potom všechny položky vypíšeme s mezerou za.
 # Ještě stojí za povšimnutí, že v tomto případě funkci print předáváme parametr end=''.
@@ -24,10 +28,19 @@ for x in seznam:
 # Předchozí výpis není ukončený koncem řádku, proto jeden vypíšeme
 print("")
 
-# To byly cykly omezené počtem, co si ale počít, když nevíme, kolikrát konkrétně chceme nějaký/é příkaz/y vykonat?
+# ----------------------------------------------------------------------------------------
+
+# Z minulého souboru už víme, kde se nacházejí všechny argumenty, se kterými byl skript spuštěný, můžeme si je tedy takto jednoduše vypsat:
+print("Argumenty:")
+for x in sys.argv:
+    print(x)
+
+# ----------------------------------------------------------------------------------------
+
+# To byly cykly omezené intervalem/počtem prvků, co si ale počít, když nevíme, kolikrát konkrétně chceme nějaký/é příkaz/y vykonat?
 # Víme jen, že někdy v budoucnu nastane situace, kdy budeme chtít skončit. Příkladem může být herní smyčka,
-# kdy ve hrách chceme opakovat vykreslování na monitor až dokud uživatel nezvolí, že chce skončit. Jak se s tím teda vyrovnat?
-# Od toho exituje cyklus while:
+# kdy ve hrách chceme opakovat vykreslování až dokud uživatel nezvolí, že chce skončit. Jak se s tím teda vypořádat?
+# Od toho exituje cyklus while, který se vykonává do té doby, dokud je podmínka vyhodnocená jako True (pravdivá):
 
 x = 1
 while True:
