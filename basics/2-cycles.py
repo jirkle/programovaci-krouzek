@@ -4,7 +4,7 @@
 # VAROVÁNÍ: Jestliže rádi kopírujete a špagetový kód vám nevadí, rozhodně následující řádky nečtěte!
 
 # Následující řádky obsahují cykly. Často potřebujeme nějaký příkaz/y vykonat několikrát za sebou pouze s nějakým měnícím se parametrem.
-# K tomu nám slouží cykly. První cyklus postupně ukládá do proměnné x čísla od 0 do 3 a spouští odsazené příkazy, v tomto případě pouze vypíše obsah proměnné x.
+# K tomu nám slouží cykly. První cyklus postupně ukládá do proměnné x čísla od 1 do 3 a spouští odsazené příkazy, v tomto případě pouze vypíše obsah proměnné x.
 
 print("Umím počítat do tří! Podívej!")
 for x in range(1, 4):
@@ -12,16 +12,16 @@ for x in range(1, 4):
 
 
 # K druhému cyklu si nejdříve vytvoříme seznam se čtyřmi položkami. Potom všechny položky vypíšeme s mezerou za.
-# Ještě stojí za povšimnutí, že v tomto případě ještě funkci print předáváme parametr end=''.
-# Funkce print totiž automaticky vypisuje za předaný řetězec konec řádku,
-# takto jí řekneme, že chceme na konec vypsat prázdný řetězec, jinými slovy nechceme na konec vypsat nic.
+# Ještě stojí za povšimnutí, že v tomto případě funkci print předáváme parametr end=''.
+# Funkce print totiž automaticky vypisuje za řetězec konec řádku,
+# tímto jí řekneme, že chceme na konec vypsat prázdný řetězec, jinými slovy nechceme tam vypsat nic.
 
 seznam = ["Jedna", "dvě", "Honza", "nejde"]
 
 for x in seznam:
     print("%s " % x, end='')
 
-# Vypíšeme prázdný řádek
+# Předchozí výpis není ukončený koncem řádku, proto jeden vypíšeme
 print("")
 
 # To byly cykly omezené počtem, co si ale počít, když nevíme, kolikrát konkrétně chceme nějaký/é příkaz/y vykonat?

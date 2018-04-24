@@ -19,7 +19,7 @@ def skvelaFunkce(parametr):
 	return "Honza Tě sleduje!"
 
 # Teď už překladač ví, že máme skvelouFunkci a funkci foo, můžeme je teda zavolat a mrknout se, co dělají.
-# Když to dáme dohromady, následující řádky nejdříve vypíšou "Foo!", potom "Jedna dvě!" a na konec "Honza Tě sleduje!"
+# Když to dáme dohromady, následující řádky zavolají naše funkce a postupně vypíšou "Foo!", potom "Jedna dvě!" a na konec "Honza Tě sleduje!"
 
 foo()
 vracenaHodnota = skvelaFunkce("Jedna dvě!")

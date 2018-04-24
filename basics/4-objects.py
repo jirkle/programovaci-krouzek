@@ -3,7 +3,7 @@
 
 # Následující řádky obsahují definici objektů. Dalo by se říct, že objekt je takový balíček proměnných a funkcí.
 # Slouží především k tomu, abychom kód dokázali ještě více logicky rozčlenit.
-# Zároveň platí, že se programy nechají psát i bez objektů, ale ve spoustě případů nám velmi usnadní práci.
+# Zároveň platí, že se programy nechají psát i bez objektů, ale ve spoustě případů nám to hodně usnadní práci.
 # 
 # Zápisu se říká třída, objektu potom už konkrétně vytvořené instanci (tady si to zaslouží popsat trochu přesněji:
 # 
@@ -33,7 +33,7 @@ instance.nastav(4)
 instance.vypis()
 
 # Objektů můžeme vytvořit více, zkuste přijít na to, co dělá a co vypíše následující kód:
-# Malá nápověda - l je seznam prvků, l[x] vrátí prvek na x-té pozici a append připojí předaný parametr na konec seznamu.
+# Malá nápověda - l je seznam prvků, l[x] vrátí prvek na x-té pozici a append připojí předaný objekt na konec seznamu.
 
 l = []
 for x in range(0, 10):
