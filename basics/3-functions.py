@@ -5,6 +5,8 @@
 # uspořádat do "přihrádek", případně když máme části kódu, které vykonáváme ve více částech programu a díky funkcím nám je stačí napsat jednou.
 # Interpretr si pamatuje definici funkce, její název a také odkaz na příkazy.
 # Když jí potom zavoláme jménem a předáme parametry, už ví, kde jí má hledat a co vykonat.
+print("")
+print("FUNCTIONS")
 
 # Takto může vypadat funkce, která vypíše na příkazový řádek "Foo!"
 def foo():
@@ -28,6 +30,18 @@ print(vracenaHodnota)
 
 # Poslední dva řádky jdou ještě zjednodušit a napsat jako jeden, tímto nám odpadá nutnost pamatovat si v proměnné vracenaHodnota vrácenou hodnotu:
 # print(skvelaFunkce("Jedna dvě!"))
+
+# ----------------------------------------------------------------------------------------
+#
+# Vrátit můžeme současně více hodnot, k tomu využijeme tuple (víc o něm v souboru k datovým strukturám)
+print("")
+print("MULTIPLE PARAMETERS RETURN")
+
+def skvelaFunkceVracejiciHodneVeci():
+	return ("Honza Tě sleduje!", 0, True, "Ale ne!", 42)
+
+print(skvelaFunkceVracejiciHodneVeci())
+
 #
 # ----------------------------------------------------------------------------------------
 #
@@ -39,15 +53,17 @@ print(vracenaHodnota)
 # Všechny proměnné základních typů (číslo, řetězec, znak, boolean - hodnota True/False, tuple, ...) se předávají hodnotou.
 # Ostatní složitější objekty potom referencí.
 
-# Řetězec se předává hodnotou a proto zůstane nezměněný
+# Příklad: Řetězec se předává hodnotou a proto zůstane nezměněný
+print("")
+print("PASS BY REFERENCE/VALUE")
 
 def upravRetezec(retezec):
 	retezec = "Honza Tě sleduje!"
 
 s = "Jedna dvě!"
-print("Před: %s" % s)
+print("Před: {0}".format(s))
 upravRetezec(s)
-print("Po: %s" % s)
+print("Po: {0}".format(s))
 
 # Seznam je jedním ze složitějších typů a proto ho následující funkce změní:
 
@@ -55,6 +71,6 @@ def upravSeznam(seznam):
 	seznam[2] = "Pepa"
 
 seznam = ["Jedna", "dvě", "Honza", "nejde"]
-print("Před: %s" % seznam)
+print("Před: {0}".format(seznam))
 upravSeznam(seznam)
-print("Po: %s" % seznam)
+print("Po: {0}".format(seznam))

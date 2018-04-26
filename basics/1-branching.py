@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Tímto říkáme, že v kódu budeme pracovat s knihovnou sys, tu využimeme pro získání sys.argv, kde jsou uložené argumenty z příkazové řádky
 import sys
 
 # Následující řádky obsahují větvení. Často potřebujeme nějaký příkaz/y vykonat pouze v závislosti na stavu programu (v tomto případě na obsahu proměnné promenna).
