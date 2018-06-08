@@ -31,6 +31,8 @@ class Animal:
 		else:
 			return "%s, the %s %s (strength %d, lives %d (%d))" % (self.name, self.salutation, self.species, self.strength, self.lifes, self.lifemax)
 	def Die(self):
+		global score
+		score = score + 1 
 		print(self.deathsound)
 		print("Unfortunately the %s is now dead." % (self.DescribeAnimal()))
 
@@ -170,6 +172,33 @@ class Parrot(Animal):
 		lifes = random.randint(50, 100)
 		Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, True, False, True)
 
+class Batman(Animal):
+	def __init__(self, name):
+		salutation = random.choice(["killer", "retarded"])
+		strength = 0
+		lifes = 0
+		if salutation == "killer":
+			strength = random.randint(1110,1120)
+			lifes = random.randint(210,220)
+		else:
+			strength = random.randint(2,3)
+			lifes = random.randint(10,12)
+		Animal.__init__(self, "Batman", name, salutation, "Joker, don't try anything!", "Dark knight will RISE AGAIN!!", strength, lifes, False, False, False)
+
+class Sheep(Animal):
+	def __init__(self, name):
+		salutation = random.choice(["undercut",])
+		strength = 0
+		lifes = 0
+		if salutation == "undercut":
+			strength = random.randint(37,54)
+			lifes = random.randint(50,100)
+		
+		Animal.__init__(self, "Sheep", name, salutation, "Will you cut sheep?", "Will you cut sheep?", strength, lifes, False, False, False)
+
+
+
+
 ####################
 # Helper functions #
 ####################
@@ -195,7 +224,8 @@ def Combat(defender, attacker):
 	print("Combat begins!")
 	if isinstance(attacker, Animal):
 		try:
-			while (len(defender.members) > 0 or attacker != None):
+			while (len(defender.members) > 0 and attacker != None):
+				print(len(defender.members))
 				print("You are facing %s"% (attacker.DescribeAnimal()))
 				print("You have following options:")
 				print(pack.DescribePack())
@@ -234,7 +264,7 @@ def GetNumber(desc, length):
 	
 
 def GenRandomAnimal():
-	return random.choice([Cow, Dog, Duckling, Crocodile, Parrot])("")
+	return random.choice([Cow, Dog, Duckling, Crocodile, Parrot, Batman, Sheep])("")
 
 def IntoDanger(pack):
 	pass
@@ -283,14 +313,63 @@ def DucklingOnPond(pack):
 def Wander(pack):
 	pass
 
+def PrintScore():
+	global score
+	print("--------------------------------------------------------------")
+	print("You may not have saved all the animals, but you murdered %d of them!" % (score))
+	print("                      You murderous bastard!                        ")
+	print("--------------------------------------------------------------")
+
+
 def EndGame(pack):
 	pack.DeleteAllMembers()
+	PrintScore()
 	exit(0)
 
-
+def NewOne (pack):
+	print("--------------------------------------------------------------")
+	print("There is a lot of animals playing dead, someone from your pack could fetch them but might pay his life for this.")
+	print(pack.DescribePack())
+	x = GetNumber("who will be sacficed ? >> ", len(pack.members))
+	victim = pack.ChooseMember(x)
+	tmp = random.randint(0,29)
+	if tmp < 10:
+		pack.DeleteMember(x)
+		print("%s has been unsuccessful. The wolves saw him and immediately killed him." % (victim.GetName()))
+	elif tmp < 20:
+		pack.DeleteMember(x)
+		animal = GenRandomAnimal()
+		print("%s has been unsuccessful. The wolves saw him at last but it was able to bring %s and immediately killed him." % (victim.GetName(), animal.DescribeAnimal()))
+		pack.AddMembers(animal)
+	else:
+		animal = GenRandomAnimal()
+		print("%s has been successful. The wolves haven't seen it and it was able to bring %s!" % (victim.GetName(), animal.DescribeAnimal()))
+		pack.AddMembers(animal)
+def MakingNewFriends (pack):
+	print("--------------------------------------------------------------")
+	print("You see a lovely tavern, and you can hear a noisy music. Will you go there?")
+	print(pack.DescribePack())
+	x = GetNumber("Which animal will come into tavern? >> ", len(pack.members))
+	victim =  pack.ChooseMember(x)
+	tmp = random.randint(0,29)
+	if tmp < 15:
+		pack.DeleteMember(x)
+		print("Unfortunately the %s was secret drinker... and he drank so much alcohol that... he fell down into the barrel with wine and drowned himself." % (victim.GetName()))
+	elif tmp < 20:
+		pack.DeleteMember(x)
+		animal = GenRandomAnimal()
+		print("What a betrayal! %s found a new group and your animals decided to murder him instead" % (victim.GetName()))
+		pack.AddMembers(animal)
+	else:
+		animal = GenRandomAnimal()
+		print("%s has been successful. You have new friend %s!" % (victim.GetName(), animal.DescribeAnimal()))
+		pack.AddMembers(animal)
+	
 ##############
 # Main plots #
 ##############
+
+score = 0
 
 # Common
 heal = {"description":"Try to heal everyone in group", "function":HealMembers}
@@ -302,15 +381,16 @@ wander = {"description":"Do not waste time with this and wander further", "funct
 duckling = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
 followTrail = {"description":"Follow the lead", "function":IntoDanger}
 climbTree = {"description":"Climb the tree", "function":ClimbTheTree}
-enterDen = {"description":"Climb the tree", "function":ClimbTheTree}
-
+enterDen = {"description":"Hire a new animal but maybe sacrifice one of your pack", "function":NewOne}
+enterTavern = {"description":"You may go to tavern and make some new friends", "function":MakingNewFriends}
 
 pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling, heal, info, wander, end]}
 tree = {"name": "Big scary tree", "description":"A tree rising above all other trees with much wider treetop, it must be spectacular view up there!", "choices":[climbTree, heal, info, wander, end]}
 cave = {"name": "A silent cave", "description":"A scary looking cave with strange loud noises. UARRrrgh! There is a trail behind the cave", "choices":[followTrail, heal, info, wander, end]}
-den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive. Nothing interesting here.", "choices":[heal, info, wander, end]}
+den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive.", "choices":[enterDen, heal, info, wander, end]}
+tavern = {"name": "Tavern at a happy animal", "description":"Famous local tavern with nice service, good food and unbeatable beverages where everyone gathers", "choices":[enterTavern, heal, info, wander, end]}
 
-scenes = [pond, tree, cave, den]
+scenes = [pond, tree, cave, den, tavern]
 
 ########
 # Init #
@@ -340,3 +420,6 @@ while len(pack.members) > 0:
 
 	x = GetNumber("What would you like to do? (enter choice number) >> ", len(scene["choices"]))
 	scene["choices"][x]["function"](pack)
+
+PrintScore()
+

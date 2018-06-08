@@ -4,12 +4,16 @@ class Dog:
 	sound = "Bark!"
 	tricks = []
 
+	def __init__(self):
+		self.tricks = []
+
 	def Bark(self):
 		print(self.sound)
 	def AddTrick(self, name):
 		self.tricks.append(name)
 	def ListTricks(self):
 		print(self.tricks)
+
 
 Jack = Dog()
 Rocky = Dog()
