@@ -16,6 +16,12 @@ class Animal:
 		self.canswim = False
 		self.canthink = False
 
+	def GetName(self):
+		if self.name == "":
+			return "Unnamed %s %s" % (self.salutation, self.species)
+		else:
+			return "%s, the %s %s" % (self.name, self.salutation)
+
 	def Rename(self, name):
 		self.name = name
 
@@ -36,14 +42,17 @@ class Animal:
 			tmp = self.lifes - self.lifemax
 			maximum = max(tmp, 20)
 			self.lifes = self.lifes + random.randint(5,20)
-	
-	def Defend(self, attacker):
-		self.lifes = self.lifes - attacker.strength
-		print(self.lifes)
+
+	def TakeDamage(self, damage):
+		self.lifes = self.lifes - damage
 		if self.lifes < 0:
 			return None
 		else:
 			return self
+		
+
+	def Defend(self, attacker):
+		return self.TakeDamage(attacker.strength)
 
 	def __str__(self):
 		if(self.name != ""):
@@ -204,8 +213,8 @@ def Combat(defender, attacker):
 		except NameError:
 			print("You have won the fight!")
 			print(pack.DescribePack())
-	elif isinstance(attacker, Pack):
-		while 
+#	elif isinstance(attacker, Pack):
+#		while 
 
 			
 def GetNumber(desc, length):
@@ -230,7 +239,39 @@ def GenRandomAnimal():
 def IntoDanger(pack):
 	pass
 
+def ClimbTheTree(pack):
+	print("--------------------------------------------------------------")
+	print("Animals decided to send one scout to climb the tree")
+	print("The choice is following:")
+	print(pack.DescribePack())
+	x = GetNumber("Who will climb the tree? >> ", len(pack.members))
+	tmp = random.randint(0,29)
+	victim = pack.ChooseMember(x)
+	print(tmp)
+	if tmp < 10:
+		print("%s climbed the tree but unfortunately an unstable branch collapsed and it fell off" % (victim.GetName()))
+		damage = random.randint(10,40)
+		if damage > 30:
+			print("And it was spectacularly bad impact!")
+		print("%s took %d damage" % (victim.GetName(), damage))
+		victim.TakeDamage(damage)
+	elif tmp < 20:
+		newMember = GenRandomAnimal()
+		print("%s successfully climbed the tree and found very scared %s" % (victim.GetName(), newMember.DescribeAnimal()))
+		print("What it was doing there remains unknown...")
+		pack.AddMembers(newMember)
+	elif tmp < 30:
+		print("%s successfully climbed the tree and looked over the forest for an adventure, but found nothing." % (victim.GetName()))
+		
+		
+
+def ShowInfo(pack):
+	print("--------------------------------------------------------------")
+	print(pack.DescribePack())
+
 def HealMembers(pack):
+	print("--------------------------------------------------------------")
+	print("All the animals gathered and helped each other to heal their terrible wounds.")
 	pack.HealMembers()
 	print(pack.DescribePack())
 
@@ -239,15 +280,39 @@ def DucklingOnPond(pack):
 	print("The duckling happily flown... until an enormously giant crocodile ate it! And now it's up to you!")
 	Combat(pack,Crocodile("The gharial"))
 
+def Wander(pack):
+	pass
+
 def EndGame(pack):
 	pack.DeleteAllMembers()
 	exit(0)
-	pass
 
 
 ##############
 # Main plots #
 ##############
+
+# Common
+heal = {"description":"Try to heal everyone in group", "function":HealMembers}
+end = {"description":"Mischievously murder everyone in your group", "function":EndGame}
+info = {"description":"Show how incredibly good (or bad) everyone is", "function":ShowInfo}
+wander = {"description":"Do not waste time with this and wander further", "function":Wander}
+
+#specific
+duckling1 = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
+trail = {"description":"Follow the lead", "function":IntoDanger}
+climb = {"description":"Climb the tree", "function":ClimbTheTree}
+
+pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling1, heal, info, wander, end]}
+tree = {"name": "Big scary tree", "description":"A tree rising above all other trees with much wider treetop, it must be spectacular view up there!", "choices":[climb, heal, info, wander, end]}
+cave = {"name": "A silent cave", "description":"", "choices":[trail, heal, info, wander, end]}
+den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive.", "choices":[trail, heal, info, wander, end]}
+
+scenes = [pond, tree, cave, den]
+
+########
+# Init #
+########
 
 name = random.choice(["Strikeforce", "Humpty-Dumpty-Da", "Elaborate Animals", "Cheeky Chubbies", "The Forest Team", "X-Force Forest"])
 pack = Pack(name)
@@ -255,19 +320,6 @@ for i in range(random.randint(2,5)):
 	pack.AddMembers(GenRandomAnimal())
 print(pack.DescribePack())
 print("A pack of animals has gathered in order to avoid danger in the forest and defend themselves. Will this help them?")
-
-choice1 = {"description":"Follow the lead", "function":IntoDanger}
-heal = {"description":"Heal everyone", "function":HealMembers}
-end = {"description":"Mischievously murder everyone in your group", "function":EndGame}
-duckling1 = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
-choices = [choice1, heal, end]
-
-
-pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling1, heal, end]}
-tree = {"name": "Big scary tree", "description":"", "choices":[choice1, heal, end]}
-cave = {"name": "A silent cave", "description":"", "choices":[choice1, heal, end]}
-
-scenes = [pond, tree, cave]
 
 #############
 # Main loop #
