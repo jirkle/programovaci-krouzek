@@ -299,13 +299,15 @@ info = {"description":"Show how incredibly good (or bad) everyone is", "function
 wander = {"description":"Do not waste time with this and wander further", "function":Wander}
 
 #specific
-duckling1 = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
-trail = {"description":"Follow the lead", "function":IntoDanger}
-climb = {"description":"Climb the tree", "function":ClimbTheTree}
+duckling = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
+followTrail = {"description":"Follow the lead", "function":IntoDanger}
+climbTree = {"description":"Climb the tree", "function":ClimbTheTree}
+enterDen = {"description":"Climb the tree", "function":ClimbTheTree}
+
 
 pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling1, heal, info, wander, end]}
 tree = {"name": "Big scary tree", "description":"A tree rising above all other trees with much wider treetop, it must be spectacular view up there!", "choices":[climb, heal, info, wander, end]}
-cave = {"name": "A silent cave", "description":"", "choices":[trail, heal, info, wander, end]}
+cave = {"name": "A silent cave", "description":"A scary looking cave with strange loud noises. UARRrrgh! There is a trail behind the cave", "choices":[trail, heal, info, wander, end]}
 den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive.", "choices":[trail, heal, info, wander, end]}
 
 scenes = [pond, tree, cave, den]
