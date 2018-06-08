@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Následující řádky obsahují definici funkce. Funkce se hodí, když chceme kód nějak logicky členit,
@@ -39,6 +39,12 @@ print("MULTIPLE PARAMETERS RETURN")
 
 def skvelaFunkceVracejiciHodneVeci():
 	return ("Honza Tě sleduje!", 0, True, "Ale ne!", 42)
+
+def vrat2():
+	return (1,2)
+
+prvni, druha = vrat2()
+print(prvni, druha)
 
 print(skvelaFunkceVracejiciHodneVeci())
 

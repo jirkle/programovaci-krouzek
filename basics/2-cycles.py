@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Tímto říkáme, že v kódu budeme pracovat s knihovnou sys
@@ -56,10 +56,10 @@ print("")
 print("WHILE CYCLES")
 
 # NÁSLEDUJÍCÍ KÓD DOPORUČUJU ZAKOMENTOVAT :)
-x = 1
-while True:
-    print("Do nekonečna a ještě dál! Už se blížíme - {0}".format(x))
-    x += 1
+#x = 1
+#while True:
+#    print("Do nekonečna a ještě dál! Už se blížíme - {0}".format(x))
+#    x += 1
 
 
 # Následující zápisy dvou cyklů jsou ekvivalentní:
@@ -68,8 +68,13 @@ while x <= 4:
     print("Do čtyř a konec! Už se blížíme - {0}".format(x))
     x += 1
 
+
+print("2. cyklus")
 x = 1
 while True:
+    if x == 2:
+        x += 1
+        continue
     print("Do čtyř a konec! Už se blížíme - {0}".format(x))
     x += 1
     if x > 4:

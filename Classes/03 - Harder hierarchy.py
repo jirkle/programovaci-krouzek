@@ -38,6 +38,7 @@ class Animal:
 	
 	def Defend(self, attacker):
 		self.lifes = self.lifes - attacker.strength
+		print(self.lifes)
 		if self.lifes < 0:
 			return None
 		else:
@@ -79,12 +80,15 @@ class Pack:
 		for animal in animals:
 			if isinstance(animal, Animal):
 				self.members.append(animal)
+	def HealMembers(self):
+		for animal in self.members:
+			animal.Heal()
 
 	def ChooseMember(self, index):
-		return self.member[index]
+		return self.members[index]
 
 	def DeleteMember(self, index):
-		self.members = [self.members[:index], self.members[index+1:]]
+		del self.members[index]
 
 	def DeleteAllMembers(self):
 		del self.members[:]
@@ -98,10 +102,19 @@ class Pack:
 
 class Dog(Animal):
 	def __init__(self, name):
-		salutation = random.choice(["Mighty", "Ferocious", "Agressive", "Sinister", "Vicious"])
+		salutation = random.choice(["Mighty", "Ferocious", "Agressive", "Sinister", "Vicious", "Agressive puppy", "Skinny little something"])
+		strength = 0
+		lifes = 0
+		if salutation == "Agressive puppy":
+			strength = random.randint(40,50)
+			lifes = random.randint(20,30)
+		elif salutation == "Skinny little something":
+			strength = random.randint(20,30)
+			lifes = random.randint(100,120)
 
-		strength = random.randint(30,60)
-		lifes = random.randint(50,100)
+		else:
+			strength = random.randint(30,60)
+			lifes = random.randint(50,100)
 
 		Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes, false, false, false)
 		self.tricks = []
@@ -147,24 +160,69 @@ class Parrot(Animal):
 		lifes = random.randint(50, 100)
 		Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, true, false, true)
 
+def duel(first, second):
+	tmp = [first, second]
+	random.shuffle(tmp)
+	print(tmp)
+	while (tmp[0] != None or tmp[1] != None):
+		print("%s attacks!" % (tmp[1].DescribeAnimal()))
+		tmp[0] = tmp[0].Defend(tmp[1])
+		if tmp[0] == None:
+			break
+		print("%s attacks!" % (tmp[0].DescribeAnimal()))
+		tmp[1] = tmp[1].Defend(tmp[0])
+	return (first, second)
+
+def Combat(defender, attacker):
+	print("Combat begins!")
+	if isinstance(attacker, Animal):
+		try:
+			while (len(defender.members) > 0 or attacker != None):
+				print("You are facing %s"% (attacker.DescribeAnimal()))
+				print("You have following options:")
+				print(pack.DescribePack())
+				x = GetNumber("who will fight now? >> ", len(defender.members))
+				duelist = pack.ChooseMember(x)
+				print(duelist.DescribeAnimal())
+				duelist, duelant = duel(duelist, attacker)
+				if duelist == None:
+					pack.DeleteMember(x)
+				else:
+					del attacker
+			attacker
+			print("Everyone has died.")
+		except:
+			print("You have won the fight!")
+			print(pack.DescribePack())
+			
+def GetNumber(desc, length):
+	x = 0
+	try:
+		x = int(input(desc))
+
+		if x < length:
+			pass
+		else:
+			print("You have selected nonexistent option. If you can't count to %s I'll select it for you randomly." % (length-1))
+			x = random.randint(0,length-1)
+	except ValueError:
+		print("You have not selected number. Selecting it for you randomly.")
+		x =random.randint(0,length)
+	return x
+	
+
 def GenRandomAnimal():
-	AnimalType = random.choice(["Cow", "Dog", "Duckling", "Crocodile", "Parrot"])
-	if AnimalType == "Cow":
-		return Cow("")
-	if AnimalType == "Dog":
-		return Dog("")
-	if AnimalType == "Duckling":
-		return Duckling("")
-	if AnimalType == "Crocodile":
-		return Crocodile("")
-	if AnimalType == "Parrot":
-		return Parrot("")
+	return random.choice([Cow, Dog, Duckling, Crocodile, Parrot])("")
 
 def IntoDanger(pack):
 	pass
 
 def HealMembers(pack):
 	pass
+
+def DucklingOnPond(pack):
+	print("Dockling happily flown... until an enormously giant crocodile ate it! And now it's up to you!")
+	Combat(pack,Dog("The gharial"))
 
 def EndGame(pack):
 	pack.DeleteAllMembers()
@@ -179,32 +237,29 @@ for i in range(random.randint(2,5)):
 print(pack.DescribePack())
 print("A pack of animals has gathered in order to avoid danger in the forest and defend themselves. Will this help them?")
 
-scenes = {"name": "Spooky pond", "Description":""}
-
 choice1 = {"description":"Follow the lead", "function":IntoDanger}
-choice2 = {"description":"Heal everyone", "function":HealMembers}
+heal = {"description":"Heal everyone", "function":HealMembers}
 end = {"description":"Mischievously murder everyone in your group", "function":EndGame}
-choices = [choice1, choice2, end]
+duckling1 = {"description":"Put the duckling into the pond", "function":DucklingOnPond}
+choices = [choice1, heal, end]
 
+
+pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling1, heal, end]}
+tree = {"name": "Big scary tree", "description":"", "choices":[choice1, heal, end]}
+cave = {"name": "A silent cave", "description":"", "choices":[choice1, heal, end]}
+
+scenes = [pond, tree, cave]
 
 while len(pack.members) > 0:
+	scene = random.choice(scenes)
 	print("--------------------------------------------------------------")
-	print("Your pack has been idle for a while, it is time for an action!")
+	print("Your pack has been idle for a while, so it decided it is time for an action!")
+	print("After a little bit of roaming through the forest a pack arrived to %s" % scene["name"])
+	print(scene["description"])
+
 	print("Choices are following:")
-	for index, choice in enumerate(choices):
+	for index, choice in enumerate(scene["choices"]):
 		print("[%d] %s" % (index, choice["description"]))
-	try:
-		x = int(input("What would you like to do? (enter choice number) >> "))
-		choices[x]["function"](pack)
 
-	except ValueError:
-		print("You have not selected number. Selecting it for you randomly.")
-		choice = random.choice(choices)
-		print("And random choice is %s!" % (choice["description"]))
-		choice["function"](pack)
-
-	except IndexError:
-		print("You have selected nonexistent option. If you can't count to %s I'll select it for you randomly." % (len(choices)))
-		choice = random.choice(choices)
-		print("And random choice is %s!" % (choice["description"]))
-		choice["function"](pack)
+	x = GetNumber("What would you like to do? (enter choice number) >> ", len(scene["choices"]))
+	scene["choices"][x]["function"](pack)
