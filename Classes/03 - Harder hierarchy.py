@@ -3,7 +3,7 @@
 import random
 
 class Animal:
-	def __init__(self, species, name, salutation, sound, deathsound, strength, lifes):
+	def __init__(self, species, name, salutation, sound, deathsound, strength, lifes, canfly, canswim, canthink):
 		self.lifemax = lifes
 		self.lifes = lifes
 		self.strength = strength
@@ -11,6 +11,9 @@ class Animal:
 		self.species = species
 		self.deathsound = deathsound
 		self.name = name
+		self.canfly = false
+		self.canswim = false
+		self.canthink = false
 
 	def Rename(self, name):
 		self.name = name
@@ -39,11 +42,29 @@ class Animal:
 			return None
 		else:
 			return self
+
 	def __str__(self):
 		if(self.name != ""):
+			if(self.species != ""):
+				return "This " + self.species.lower() + "'s name is "+self.name
 			return "This animal's name is "+self.name
 		else:
+			if(self.species != ""):
+				return "This " + self.species.lower() + " does not have a name"
 			return "This animal does not have a name"
+
+	def DoSound(self):
+		print(self.sound)
+
+	def Call(self):
+		print(self.name + ", the " + self.species.lower() + "!")
+
+	def AddTricks(self, *tricks):
+		for trick in tricks:
+			self.tricks.append(trick)
+
+	def ListTricks(self):
+		print(self.tricks)
 
 
 class Pack:
@@ -82,28 +103,8 @@ class Dog(Animal):
 		strength = random.randint(30,60)
 		lifes = random.randint(50,100)
 
-		Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes)
+		Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes, false, false, false)
 		self.tricks = []
-
-	def AddTricks(self, *tricks):
-		for trick in tricks:
-			self.tricks.append(trick)
-
-	def ListTricks(self):
-		print(self.tricks)
-
-
-	def Defend(self, oponent):
-		pass
-
-	def Bark(self):
-		print(self.sound)
-
-	def Call(self):
-		print(self.name+"!")
-
-	def __str__(self):
-		return "This dog's name is "+self.name
 
 
 class Cow(Animal):
@@ -117,32 +118,47 @@ class Cow(Animal):
 		else:
 			strength = random.randint(20,30)
 			lifes = random.randint(100,120)
-		Animal.__init__(self, "Cow", name, salutation, "Moo!", "MooAAAAaaa!", strength, lifes)
+		Animal.__init__(self, "Cow", name, salutation, "Moo!", "MooAAAAaaa!", strength, lifes, false, false, false)
 
-	def AddTricks(self, *tricks):
-		for trick in tricks:
-			self.tricks.append(trick)
+class Duckling(Animal):
+	def __init__(self, name):
+		salutation = random.choice(["Little", "Tiny", "Cute"])
+		strength = 0
+		lifes = 0
+		strength = random.randint(100, 200)
+		lifes = random.randint(100, 200)
+		Animal.__init__(self, "Duckling", name, salutation, "Quack!", "&*#X!!", strength, lifes, false, true, false)
 
-	def ListTricks(self):
-		print(self.tricks)
+class Crocodile(Animal):
+	def __init__(self, name):
+		salutation = random.choice(["Powerful", "Huge", "Bad", "Dangerous"])
+		strength = 0
+		lifes = 0
+		strength = random.randint(50, 100)
+		lifes = random.randint(100, 150)
+		Animal.__init__(self, "Crocodile", name, salutation, "Roar!", "RRROOOOaar!", strength, lifes, false, true, false)
 
-
-	def Moo(self):
-		print(self.sound)
-
-	def Call(self):
-		if(self.name != ""):
-			print(self.name+"!")
-		else:
-			print("Cow, come here!")
-
+class Parrot(Animal):
+	def __init__(self, name):
+		salutation = random.choice(["Intelligent", "Tiny", "Cute"])
+		strength = 0
+		lifes = 0
+		strength = random.randint(10, 50)
+		lifes = random.randint(50, 100)
+		Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, true, false, true)
 
 def GenRandomAnimal():
-	AnimalType = random.choice(["Cow", "Dog"])
+	AnimalType = random.choice(["Cow", "Dog", "Duckling", "Crocodile", "Parrot"])
 	if AnimalType == "Cow":
 		return Cow("")
 	if AnimalType == "Dog":
 		return Dog("")
+	if AnimalType == "Duckling":
+		return Duckling("")
+	if AnimalType == "Crocodile":
+		return Crocodile("")
+	if AnimalType == "Parrot":
+		return Parrot("")
 
 def IntoDanger(pack):
 	pass
