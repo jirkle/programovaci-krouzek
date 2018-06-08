@@ -305,10 +305,10 @@ climbTree = {"description":"Climb the tree", "function":ClimbTheTree}
 enterDen = {"description":"Climb the tree", "function":ClimbTheTree}
 
 
-pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling1, heal, info, wander, end]}
-tree = {"name": "Big scary tree", "description":"A tree rising above all other trees with much wider treetop, it must be spectacular view up there!", "choices":[climb, heal, info, wander, end]}
-cave = {"name": "A silent cave", "description":"A scary looking cave with strange loud noises. UARRrrgh! There is a trail behind the cave", "choices":[trail, heal, info, wander, end]}
-den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive.", "choices":[trail, heal, info, wander, end]}
+pond = {"name": "Spooky pond", "description":"A pond with a lot of meanders, seems calm but it might be a trap! There is a brightly yellow duckling nerby.", "choices":[duckling, heal, info, wander, end]}
+tree = {"name": "Big scary tree", "description":"A tree rising above all other trees with much wider treetop, it must be spectacular view up there!", "choices":[climbTree, heal, info, wander, end]}
+cave = {"name": "A silent cave", "description":"A scary looking cave with strange loud noises. UARRrrgh! There is a trail behind the cave", "choices":[followTrail, heal, info, wander, end]}
+den = {"name": "Wolf's den", "description":"Well known den full of wide range of animals and other stuff. Some of them still alive. Nothing interesting here.", "choices":[heal, info, wander, end]}
 
 scenes = [pond, tree, cave, den]
 
