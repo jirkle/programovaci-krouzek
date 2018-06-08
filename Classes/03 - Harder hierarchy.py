@@ -9,11 +9,12 @@ class Animal:
 		self.strength = strength
 		self.salutation = salutation
 		self.species = species
+		self.sound = sound
 		self.deathsound = deathsound
 		self.name = name
-		self.canfly = false
-		self.canswim = false
-		self.canthink = false
+		self.canfly = False
+		self.canswim = False
+		self.canthink = False
 
 	def Rename(self, name):
 		self.name = name
@@ -116,7 +117,7 @@ class Dog(Animal):
 			strength = random.randint(30,60)
 			lifes = random.randint(50,100)
 
-		Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes, false, false, false)
+		Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes, False, False, False)
 		self.tricks = []
 
 
@@ -131,7 +132,7 @@ class Cow(Animal):
 		else:
 			strength = random.randint(20,30)
 			lifes = random.randint(100,120)
-		Animal.__init__(self, "Cow", name, salutation, "Moo!", "MooAAAAaaa!", strength, lifes, false, false, false)
+		Animal.__init__(self, "Cow", name, salutation, "Moo!", "MooAAAAaaa!", strength, lifes, False, False, False)
 
 class Duckling(Animal):
 	def __init__(self, name):
@@ -140,7 +141,7 @@ class Duckling(Animal):
 		lifes = 0
 		strength = random.randint(100, 200)
 		lifes = random.randint(100, 200)
-		Animal.__init__(self, "Duckling", name, salutation, "Quack!", "&*#X!!", strength, lifes, false, true, false)
+		Animal.__init__(self, "Duckling", name, salutation, "Quack!", "&*#X!!", strength, lifes, False, True, False)
 
 class Crocodile(Animal):
 	def __init__(self, name):
@@ -149,7 +150,7 @@ class Crocodile(Animal):
 		lifes = 0
 		strength = random.randint(50, 100)
 		lifes = random.randint(100, 150)
-		Animal.__init__(self, "Crocodile", name, salutation, "Roar!", "RRROOOOaar!", strength, lifes, false, true, false)
+		Animal.__init__(self, "Crocodile", name, salutation, "Roar!", "RRROOOOaar!", strength, lifes, False, True, False)
 
 class Parrot(Animal):
 	def __init__(self, name):
@@ -158,20 +159,28 @@ class Parrot(Animal):
 		lifes = 0
 		strength = random.randint(10, 50)
 		lifes = random.randint(50, 100)
-		Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, true, false, true)
+		Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, True, False, True)
+
+####################
+# Helper functions #
+####################
 
 def duel(first, second):
-	tmp = [first, second]
-	random.shuffle(tmp)
-	print(tmp)
-	while (tmp[0] != None or tmp[1] != None):
-		print("%s attacks!" % (tmp[1].DescribeAnimal()))
-		tmp[0] = tmp[0].Defend(tmp[1])
-		if tmp[0] == None:
+	if random.randint(0,9) < 5:
+		print("%s attacks!" % (first.DescribeAnimal()))
+		second = second.Defend(first)
+		if second == None:
+			return (first, second)
+
+	while (first != None and second != None):
+		print("%s attacks!" % (second.DescribeAnimal()))
+		first = first.Defend(second)
+		if first == None:
 			break
-		print("%s attacks!" % (tmp[0].DescribeAnimal()))
-		tmp[1] = tmp[1].Defend(tmp[0])
+		print("%s attacks!" % (first.DescribeAnimal()))
+		second = second.Defend(first)
 	return (first, second)
+
 
 def Combat(defender, attacker):
 	print("Combat begins!")
@@ -184,16 +193,20 @@ def Combat(defender, attacker):
 				x = GetNumber("who will fight now? >> ", len(defender.members))
 				duelist = pack.ChooseMember(x)
 				print(duelist.DescribeAnimal())
-				duelist, duelant = duel(duelist, attacker)
-				if duelist == None:
+				duelant, duelist = duel(duelist, attacker)
+				if duelant == None:
 					pack.DeleteMember(x)
 				else:
 					del attacker
-			attacker
+			if attacker:
+				print("woho!")
 			print("Everyone has died.")
-		except:
+		except NameError:
 			print("You have won the fight!")
 			print(pack.DescribePack())
+	elif isinstance(attacker, Pack):
+		while 
+
 			
 def GetNumber(desc, length):
 	x = 0
@@ -207,7 +220,7 @@ def GetNumber(desc, length):
 			x = random.randint(0,length-1)
 	except ValueError:
 		print("You have not selected number. Selecting it for you randomly.")
-		x =random.randint(0,length)
+		x =random.randint(0,length-1)
 	return x
 	
 
@@ -218,17 +231,23 @@ def IntoDanger(pack):
 	pass
 
 def HealMembers(pack):
-	pass
+	pack.HealMembers()
+	print(pack.DescribePack())
 
 def DucklingOnPond(pack):
-	print("Dockling happily flown... until an enormously giant crocodile ate it! And now it's up to you!")
-	Combat(pack,Dog("The gharial"))
+	print("--------------------------------------------------------------")
+	print("The duckling happily flown... until an enormously giant crocodile ate it! And now it's up to you!")
+	Combat(pack,Crocodile("The gharial"))
 
 def EndGame(pack):
 	pack.DeleteAllMembers()
 	exit(0)
 	pass
 
+
+##############
+# Main plots #
+##############
 
 name = random.choice(["Strikeforce", "Humpty-Dumpty-Da", "Elaborate Animals", "Cheeky Chubbies", "The Forest Team", "X-Force Forest"])
 pack = Pack(name)
@@ -249,6 +268,10 @@ tree = {"name": "Big scary tree", "description":"", "choices":[choice1, heal, en
 cave = {"name": "A silent cave", "description":"", "choices":[choice1, heal, end]}
 
 scenes = [pond, tree, cave]
+
+#############
+# Main loop #
+#############
 
 while len(pack.members) > 0:
 	scene = random.choice(scenes)
