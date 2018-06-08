@@ -38,7 +38,12 @@ class Pack:
 # Helper functions #
 ####################
 
-def Duel(first, second):
+def showInfo(pack):
+	print("--------------------------------------------------------------")
+	print(pack.DescribePack())
+
+
+def duel(first, second):
 	if random.randint(0,9) < 5:
 		print("%s attacks!" % (first.DescribeAnimal()))
 		second = second.Defend(first)
@@ -55,7 +60,7 @@ def Duel(first, second):
 	return (first, second)
 
 
-def Combat(defender, attacker):
+def combat(defender, attacker):
 	print("COMBAT begins!")
 	if isinstance(attacker, Animal):
 		try:
@@ -63,10 +68,10 @@ def Combat(defender, attacker):
 				print("You are facing %s"% (attacker.DescribeAnimal()))
 				print("You have following options:")
 				print(defender.DescribePack())
-				x = GetNumber("who will fight now? >> ", len(defender.members))
+				x = getNumber("who will fight now? >> ", len(defender.members))
 				duelist = defender.ChooseMember(x)
 				print(duelist.DescribeAnimal())
-				duelant, duelist = Duel(duelist, attacker)
+				duelant, duelist = duel(duelist, attacker)
 				if duelant == None:
 					defender.DeleteMember(x)
 				else:
@@ -81,7 +86,7 @@ def Combat(defender, attacker):
 		pass
 
 			
-def GetNumber(desc, length):
+def getNumber(desc, length):
 	x = 0
 	try:
 		x = int(input(desc))

@@ -12,9 +12,9 @@ class Animal:
 		self.sound = sound
 		self.deathsound = deathsound
 		self.name = name
-		self.canfly = False
-		self.canswim = False
-		self.canthink = False
+		self.canfly = canfly
+		self.canswim = canswim
+		self.canthink = canthink
 
 	def GetName(self):
 		if self.name == "":
