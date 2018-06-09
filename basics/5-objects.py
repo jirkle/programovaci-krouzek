@@ -33,6 +33,8 @@ instance = Objekt()
 instance.vypis()
 instance.nastav(4)
 instance.vypis()
+instance2 = Objekt()
+instance2.vypis()
 
 # ----------------------------------------------------------------------------------------
 

@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 class Dog:
+
 	sound = "Bark!"
-	tricks = []
+
+	def __init__(self):
+		self.tricks = []
 
 	def __init__(self):
 		self.tricks = []
@@ -26,5 +29,8 @@ Rocky.Bark()
 
 Rocky.AddTrick("Aport")
 Jack.AddTrick("Sit down")
+Rocky.AddTrick("Stay here")
 
 Rocky.ListTricks()
+
+

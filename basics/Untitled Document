@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+def foobar (n):
+	if n%2==2:
+		print=("foo")
+
+foobar(10)
+for x in range (1,8):

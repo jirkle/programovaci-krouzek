@@ -2,6 +2,7 @@
 
 import random
 
+
 class Animal:
     def __init__(self, species, name, salutation, sound, deathsound, strength, lifes, canfly, canswim, canthink):
         self.lifemax = lifes
@@ -16,7 +17,6 @@ class Animal:
         self.canswim = canswim
         self.canthink = canthink
 
-
     def GetName(self):
         if self.name == "":
             return "Unnamed %s %s" % (self.salutation, self.species)
@@ -28,12 +28,15 @@ class Animal:
 
     def DescribeAnimal(self):
         if self.name == "":
-            return "Unnamed %s %s (strength %d, lives %d (%d))" % (self.salutation, self.species, self.strength, self.lifes, self.lifemax)
+            return "Unnamed %s %s (strength %d, lives %d (%d))" % (
+            self.salutation, self.species, self.strength, self.lifes, self.lifemax)
         else:
-            return "%s, the %s %s (strength %d, lives %d (%d))" % (self.name, self.salutation, self.species, self.strength, self.lifes, self.lifemax)
+            return "%s, the %s %s (strength %d, lives %d (%d))" % (
+            self.name, self.salutation, self.species, self.strength, self.lifes, self.lifemax)
+
     def Die(self):
         print(self.deathsound)
-        print("Unfortunately the %s is now dead." % (self.DescribeAnimal()))
+        print("%s is now dead." % (self.DescribeAnimal()))
 
     def __del__(self):
         self.Die()
@@ -42,7 +45,7 @@ class Animal:
         if self.lifes < self.lifemax:
             tmp = self.lifes - self.lifemax
             maximum = max(tmp, 20)
-            self.lifes = self.lifes + random.randint(5,20)
+            self.lifes = self.lifes + random.randint(5, 20)
 
     def TakeDamage(self, damage):
         self.lifes = self.lifes - damage
@@ -55,12 +58,12 @@ class Animal:
         return self.TakeDamage(attacker.strength)
 
     def __str__(self):
-        if(self.name != ""):
-            if(self.species != ""):
-                return "This " + self.species.lower() + "'s name is "+self.name
-            return "This animal's name is "+self.name
+        if (self.name != ""):
+            if (self.species != ""):
+                return "This " + self.species.lower() + "'s name is " + self.name
+            return "This animal's name is " + self.name
         else:
-            if(self.species != ""):
+            if (self.species != ""):
                 return "This " + self.species.lower() + " does not have a name"
             return "This animal does not have a name"
 
@@ -77,21 +80,23 @@ class Animal:
     def ListTricks(self):
         print(self.tricks)
 
+
 class Dog(Animal):
     def __init__(self, name):
-        salutation = random.choice(["Mighty", "Ferocious", "Agressive", "Sinister", "Vicious", "Agressive puppy", "Skinny little something"])
+        salutation = random.choice(
+            ["Mighty", "Ferocious", "Agressive", "Sinister", "Vicious", "Agressive puppy", "Skinny little something"])
         strength = 0
         lifes = 0
         if salutation == "Agressive puppy":
-            strength = random.randint(40,50)
-            lifes = random.randint(20,30)
+            strength = random.randint(40, 50)
+            lifes = random.randint(20, 30)
         elif salutation == "Skinny little something":
-            strength = random.randint(20,30)
-            lifes = random.randint(100,120)
+            strength = random.randint(20, 30)
+            lifes = random.randint(100, 120)
 
         else:
-            strength = random.randint(30,60)
-            lifes = random.randint(50,100)
+            strength = random.randint(30, 60)
+            lifes = random.randint(50, 100)
 
         Animal.__init__(self, "Dog", name, salutation, "Arf!", "ARRRRrrrf!", strength, lifes, False, False, False)
         self.tricks = []
@@ -103,39 +108,91 @@ class Cow(Animal):
         strength = 0
         lifes = 0
         if salutation == "Unfeeded":
-            strength = random.randint(5,10)
-            lifes = random.randint(30,40)
+            strength = random.randint(5, 10)
+            lifes = random.randint(30, 40)
         else:
-            strength = random.randint(20,30)
-            lifes = random.randint(100,120)
+            strength = random.randint(20, 30)
+            lifes = random.randint(100, 120)
         Animal.__init__(self, "Cow", name, salutation, "Moo!", "MooAAAAaaa!", strength, lifes, False, False, False)
+
 
 class Duckling(Animal):
     def __init__(self, name):
         salutation = random.choice(["Little", "Tiny", "Cute"])
-        strength = 0
-        lifes = 0
         strength = random.randint(100, 200)
         lifes = random.randint(100, 200)
         Animal.__init__(self, "Duckling", name, salutation, "Quack!", "&*#X!!", strength, lifes, False, True, False)
 
+
 class Crocodile(Animal):
     def __init__(self, name):
         salutation = random.choice(["Powerful", "Huge", "Bad", "Dangerous"])
-        strength = 0
-        lifes = 0
         strength = random.randint(50, 100)
         lifes = random.randint(100, 150)
-        Animal.__init__(self, "Crocodile", name, salutation, "Roar!", "RRROOOOaar!", strength, lifes, False, True, False)
+        Animal.__init__(self, "Crocodile", name, salutation, "Roar!", "RRROOOOaar!", strength, lifes, False, True,
+                        False)
+
 
 class Parrot(Animal):
     def __init__(self, name):
         salutation = random.choice(["Intelligent", "Tiny", "Cute"])
-        strength = 0
-        lifes = 0
         strength = random.randint(10, 50)
         lifes = random.randint(50, 100)
         Animal.__init__(self, "Parrot", name, salutation, "Tweet tweet!", "TWITER!", strength, lifes, True, False, True)
 
-def GenRandomAnimal():
-    return random.choice([Cow, Dog, Duckling, Crocodile, Parrot])("")
+class Ogre(Animal):
+    def __init__(self, name):
+        salutation = random.choice(["Bad", "Scared", "Stupid"])
+        strenght = 0
+        lifes = 0
+        canThink = True
+        if salutation == "Stupid":
+            canThink = False
+            lifes = random.randint(120, 190)
+            strenght = random.randint(25, 50)
+        if salutation == "Bad":
+            lifes = random.randint(50, 100)
+            strenght = random.randint(70, 90)
+        if salutation == "Scared":
+            lifes = random.randint(70, 90)
+            strenght = random.randint(70, 90)
+        Animal.__init__(self, "Ogre", name, salutation, "Ogrrr Uhrrr!", "OGGGR!", strenght, lifes, True, False,
+                        canThink)
+
+
+class Batman(Animal):
+    def __init__(self, name):
+        salutation = random.choice(["Killer", "Retarded"])
+        strength = 0
+        lifes = 0
+        if salutation == "killer":
+            strength = random.randint(1110, 1120)
+            lifes = random.randint(210, 220)
+        else:
+            strength = random.randint(2, 3)
+            lifes = random.randint(10, 12)
+        Animal.__init__(self, "Batman", name, salutation, "Joker, don't try anything!", "Dark knight will RISE AGAIN!!",
+                        strength, lifes, False, False, False)
+
+
+class Sheep(Animal):
+    def __init__(self, name):
+        salutation = random.choice(["Undercut"])
+        strength = 0
+        lifes = 0
+        if salutation == "Undercut":
+            strength = random.randint(37, 54)
+            lifes = random.randint(50, 100)
+
+        Animal.__init__(self, "Sheep", name, salutation, "Will you cut sheep?", "Will you cut sheep?", strength, lifes,
+                        False, False, False)
+
+
+def genRandomAnimal():
+    return random.choice([Cow, Dog, Duckling, Crocodile, Parrot, Batman, Sheep])(genRandomName())
+
+def genRandomEnemy():
+    return random.choice([Ogre, Batman])(genRandomName())
+
+def genRandomName():
+    return random.choice(["Melman", "Andy", "Brandy", "Whiskey", "Goal", "Flute", "Brute", "Crude"])
