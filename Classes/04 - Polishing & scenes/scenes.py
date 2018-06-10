@@ -211,7 +211,7 @@ class OldBridge(Scene):
                 print("%s got on bridge, but unfortunately it fell off and wound himself" % (victim.GetName()))
             else:
                 print("%s got on bridge, but unfortunately the tree branch has fell down and hit his %s head" % (
-                victim.GetName(), victim.salutation))
+                    victim.GetName(), victim.salutation))
             damage = random.randint(10, 35)
             if damage > 30:
                 print("And it was spectacularly bad impact!")
@@ -280,6 +280,7 @@ class Tavern(Scene):
             pack.AddMembers(animal)
         return -1
 
+
 class ScaryHouse(Scene):
     def __init__(self):
         Scene.__init__(self, "A silent house", "Your dead pack members are there.")
@@ -288,3 +289,7 @@ class ScaryHouse(Scene):
 
     def follow(self, pack):
         return -1
+
+
+def genRandomScene():
+    return random.choice([Pond, Tree, Den, Tavern, OldBridge, ScaryHouse])()

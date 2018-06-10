@@ -26,16 +26,13 @@ print("They get together in order to avoid danger in the forest and defend thems
 print("Well, the adventrue begins!")
 time.sleep(20)
 
-
-scenes = [Pond, Tree, Tavern, Den, OldBridge]
-
 #############
 # Main loop #
 #############
 #terminal_rows, terminal_columns = os.popen('stty size', 'r').read().split()
 while len(pack.members) > 0:
 
-    scene = random.choice(scenes)()  # Calls the constructor and creates new scene object
+    scene = genRandomScene()
     while not scene.isComplete():
         scene.nextStage(pack)
 
@@ -43,5 +40,5 @@ while len(pack.members) > 0:
         print("And story continues...")
     #TODO print lines to align ----- start to upper border
     if len(pack.members) > 0:
-        time.sleep(10)
+        time.sleep(3)
 
