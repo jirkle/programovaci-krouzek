@@ -187,9 +187,24 @@ class Sheep(Animal):
         Animal.__init__(self, "Sheep", name, salutation, "Will you cut sheep?", "Will you cut sheep?", strength, lifes,
                         False, False, False)
 
+class Snail(Animal):
+    def __init__(self, name):
+        salutation = random.choice(["Slowly", "Ferocious", "Agressive", "Nice", "Happy", "Hidden"])
+        strength = 0
+        lifes = 0
+        if salutation == "Slowly":
+            strength = random.randint(8,10)
+            lifes = random.randint(40,50)
+        elif salutation == "Hidden":
+            strength = random.radint(18,30)
+            lifes = random.randint(200,210)
+        else:
+            strength = random.randint(18,30)
+            lifes = random.randint(101,129)
+        Animal.__init__(self, "Snail", name, salutation, "Vruuuu!", "VruAAAhhhh!", strength, lifes, False, False,True)
 
 def genRandomAnimal():
-    return random.choice([Cow, Dog, Duckling, Crocodile, Parrot, Batman, Sheep])(genRandomName())
+    return random.choice([Cow, Dog, Duckling, Crocodile, Parrot, Batman, Sheep, Snail])(genRandomName())
 
 def genRandomEnemy():
     return random.choice([Ogre, Batman])(genRandomName())

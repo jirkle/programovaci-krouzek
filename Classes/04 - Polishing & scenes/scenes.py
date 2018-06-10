@@ -279,3 +279,12 @@ class Tavern(Scene):
             print("%s has been successful. You have new friend %s!" % (victim.GetName(), animal.DescribeAnimal()))
             pack.AddMembers(animal)
         return -1
+
+class ScaryHouse(Scene):
+    def __init__(self):
+        Scene.__init__(self, "A silent house", "Your dead pack members are there.")
+        self.choices["follow"] = {"description": "Yes, I will!", "function": self.follow}
+        self.stages = [{"description": "Would you go inside?", "choices": ["follow", "heal", "info", "wander", "end"]}]
+
+    def follow(self, pack):
+        return -1
